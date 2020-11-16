@@ -78,8 +78,10 @@ function addToBody() {
 }
 
 function createReactionButtons() {
+  const buttons = [likeBtn, dislikeBtn, loveBtn];
   buttonContainer.style.visibility = "visible";
   buttonContainer.append(likeBtn, dislikeBtn, loveBtn);
+  buttons.forEach((button) => button.classList.add("reactionButtons"));
 }
 
 function createPost(postData) {

@@ -17,3 +17,11 @@
 #buttonContainer {
   visibility: hidden;
 }
+
+.reactionButtons {
+  height: 30px;
+}
+
+/* .reactionButtons::before {
+  content: "👍 ";
+} */
