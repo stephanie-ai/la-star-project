@@ -9,7 +9,7 @@
     <script defer src="app.js"></script>
 </head>
 
-    <form id="post-form">
+    <form id="postForm">
         <label for="content">Type your message</label>
         <input type="text" id="content" />
 
@@ -19,18 +19,23 @@
     <section id="posts">
         <!-- <h3>Anonymous posts:</h3> -->
             <form id="replyForm">
-                
-                <input id="replyContent" type="text"/>
-                <input id="replyButton" type="submit" value="Reply">
+
+                <div id="postContainer">
+                    <span></span>
+                    <input id="replyButton" type="submit" value="Leave a reply">
+                    <div is="buttonContainer">
+                        <button id="likes">👍 0</button>
+                        <button id="dislikes">👎 0</button>
+                        <button id="loves">😍 0</button>
+                    </div>
+                </div>
+
+                <div id="replyContainer">
+                    <input id="replyContent" type="text"/>
+                    <input id="replyButton" type="submit" value="Reply">
+                </div>
             </form>
     </section>
-
-<div>
-    <button id="likes">👍 0</button>
-    <button id="dislikes">👎 0</button>
-    <button id="loves">😍 0</button>
-
-</div>
 
 </body>
 </html>

@@ -5,10 +5,15 @@
 #replyForm {
   height: auto;
   width: 50%;
+  background: pink;
   visibility: hidden;
   background: rgb(190, 190, 190);
 }
 
-#replyContent {
+#replyButton {
+  visibility: hidden;
+}
+
+#buttonContainer {
   visibility: hidden;
 }
