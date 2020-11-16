@@ -1,27 +1,34 @@
 // ********** emoji reaction function ********
 
-const button1 = document.getElementById("likes");
-const button2 = document.getElementById("dislikes");
-const button3 = document.getElementById("loves");
+const likeBtn = document.createElement("button");
+const dislikeBtn = document.createElement("button");
+const loveBtn = document.createElement("button");
 
-likecount = 0;
-dislikecount = 0;
-lovecount = 0;
+likeBtn.onclick = reactionCounter();
 
-button1.onclick = function () {
-  likecount += 1;
-  button1.innerHTML = "👍 " + likecount;
-};
+function reactionCounter() {
+  let likecount = 0;
+  return (likeBtn.textContent = "1 like");
+  // return (likecount += 1);
+}
+// likecount = 0;
+// dislikecount = 0;
+// lovecount = 0;
 
-button2.onclick = function () {
-  dislikecount += 1;
-  button2.innerHTML = "👎  " + dislikecount;
-};
+// likeBtn.onclick = function () {
+//   likecount += 1;
+//   button1.innerHTML = "👍 " + likecount;
+// };
 
-button3.onclick = function () {
-  lovecount += 1;
-  button3.innerHTML = "😍 " + lovecount;
-};
+// button2.onclick = function () {
+//   dislikecount += 1;
+//   button2.innerHTML = "👎  " + dislikecount;
+// };
+
+// button3.onclick = function () {
+//   lovecount += 1;
+//   button3.innerHTML = "😍 " + lovecount;
+// };
 
 // ********** Submit message function ********
 
@@ -31,6 +38,7 @@ form.addEventListener("submit", submitPost);
 const formReply = document.querySelector("#postContainer");
 const postList = document.querySelector("#replyContent");
 const buttonContainer = document.querySelector("#buttonContainer");
+const replyButton = document.getElementById("replyButton");
 
 function submitPost(e) {
   e.preventDefault();
@@ -38,6 +46,8 @@ function submitPost(e) {
   const postData = {
     content: e.target.content.value,
   };
+
+  createPost(postData);
 
   const options = {
     method: "POST",
@@ -57,14 +67,28 @@ function appendPosts(data) {
   data.posts.forEach(addToBody);
 }
 
-function addToBody(postData) {
-  const replyButton = document.getElementById("replyButton");
+function addToBody() {
+  createReactionButtons();
+  createReplyButton();
+}
+
+function createReactionButtons() {
+  buttonContainer.style.visibility = "visible";
+  buttonContainer.append(likeBtn, dislikeBtn, loveBtn);
+}
+
+function createPost(postData) {
+  const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
   newMessage.textContent = `Anonymous says: ${postData.content}`;
-  formReply.append(newMessage);
+  formReply.append(newPost);
+  formReply.insertAdjacentElement("afterbegin", newPost);
+  newPost.insertAdjacentElement("afterbegin", newMessage);
   formReply.style.visibility = "visible";
+}
+
+function createReplyButton() {
   replyButton.style.visibility = "visible";
-  buttonContainer.style.visibility = "visible";
 }
 
 // postList.style.visibility = "visible";
