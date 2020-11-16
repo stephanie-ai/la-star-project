@@ -20,25 +20,30 @@ let lovecount = 0;
 likeBtn.onclick = function (e) {
   e.preventDefault();
   likecount += 1;
-  likeBtn.innerHTML = "👍 " + likecount;
+  likeBtn.innerHTML =  likecount;
+  console.log(likecount);
+  disable();
 };
 
 dislikeBtn.onclick = function (e) {
   e.preventDefault();
   dislikecount += 1;
-  dislikeBtn.innerHTML = "👎 " + dislikecount;
+  dislikeBtn.innerHTML = dislikecount;
+  disable()
 };
 
 loveBtn.onclick = function (e) {
   e.preventDefault();
   lovecount += 1;
-  loveBtn.innerHTML = "😍 " + lovecount;
+  loveBtn.innerHTML = lovecount;
+  disable()
 };
 
-// const buttons = [likeBtn, dislikeBtn, loveBtn];
-// //to disable all other buttons
-// buttons.forEach(button => button.disabled = true)
-//buttons.addEventListener("click", a function);
+//helper function to disable every other un-clicked button.
+function disable(){
+const buttons = [likeBtn, dislikeBtn, loveBtn];
+buttons.forEach(button => button.disabled = true)
+}
 
 // ********** Submit message function ********
 
@@ -56,6 +61,13 @@ function submitPost(e) {
   const postData = {
     content: e.target.content.value,
   };
+
+  //find a way to pass the count number to server
+  // const emojiReactionCounter ={
+  //   likes: e.target.likes.value,
+  //   dislikes: e.target.dislikes.value,
+  //   loves: e.target.loves.value,
+  // }
 
   createPost(postData);
 
@@ -87,6 +99,11 @@ function createReactionButtons() {
   buttonContainer.style.visibility = "visible";
   buttonContainer.append(likeBtn, dislikeBtn, loveBtn);
   buttons.forEach((button) => button.classList.add("reactionButtons"));
+  //create a class for each button for the content
+  likeBtn.classList.add("like");
+  dislikeBtn.classList.add("dislike");
+  loveBtn.classList.add("love");
+
 }
 
 function createPost(postData) {

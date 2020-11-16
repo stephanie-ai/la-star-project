@@ -22,6 +22,21 @@
   height: 30px;
 }
 
-/* .reactionButtons::before {
+
+/* reaction emoji */
+.like::before {
   content: "👍 ";
-} */
+}
+
+.dislike::before {
+  content: "👎 ";
+}
+
+.love::before {
+  content: "❤️ ";
+}
+
+.like, .dislike, .love{
+  border: black;
+  color: black;
+}
