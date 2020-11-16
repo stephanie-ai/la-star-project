@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+#replyForm {
+  height: auto;
+  width: 50%;
+  visibility: hidden;
+  background: rgb(190, 190, 190);
+}
+
+#replyContent {
+  visibility: hidden;
+}
