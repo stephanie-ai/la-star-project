@@ -79,7 +79,8 @@ button3.onclick = function () {
 const form = document.querySelector("#post-form");
 form.addEventListener("submit", submitPost);
 
-const postList = document.querySelector("ul");
+const formReply = document.querySelector("#replyForm");
+const postList = document.querySelector("#replyContent");
 
 function submitPost(e) {
   e.preventDefault();
@@ -109,5 +110,7 @@ function appendPosts(data) {
 function addToBody(postData) {
   const newMessage = document.createElement("p");
   newMessage.textContent = `Anonymous says: ${postData.content}`;
-  postList.append(newMessage);
+  formReply.append(newMessage);
+  formReply.style.visibility = "visible";
+  postList.style.visibility = "visible";
 }
