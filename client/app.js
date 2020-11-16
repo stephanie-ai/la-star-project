@@ -35,6 +35,11 @@ loveBtn.onclick = function (e) {
   loveBtn.innerHTML = "😍 " + lovecount;
 };
 
+// const buttons = [likeBtn, dislikeBtn, loveBtn];
+// //to disable all other buttons
+// buttons.forEach(button => button.disabled = true)
+//buttons.addEventListener("click", a function);
+
 // ********** Submit message function ********
 
 const form = document.querySelector("#postForm");
