@@ -1,0 +1,25 @@
+{
+  "name": "lastar",
+  "version": "1.0.0",
+  "description": "anonymous message api",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon startServer.js",
+    "coverage": "mocha nyc"
+  },
+  "keywords": [],
+  "author": "Tara Steph Paola",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
+    "supertest": "^6.0.1"
+  }
+}
