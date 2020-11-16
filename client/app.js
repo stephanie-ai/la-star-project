@@ -1,34 +1,39 @@
 // ********** emoji reaction function ********
 
 const likeBtn = document.createElement("button");
+// const likeBtnCounter = document.createElement("p");
+
 const dislikeBtn = document.createElement("button");
 const loveBtn = document.createElement("button");
 
-likeBtn.onclick = reactionCounter();
+// likeBtn.onclick = reactionCounter();
 
-function reactionCounter() {
-  let likecount = 0;
-  return (likeBtn.textContent = "1 like");
-  // return (likecount += 1);
-}
-// likecount = 0;
-// dislikecount = 0;
-// lovecount = 0;
+// function reactionCounter() {
+//   let likecount = 0;
+//   return (likeBtn.textContent = "1 like");
+// return (likecount += 1);
+// }
+let likecount = 0;
+let dislikecount = 0;
+let lovecount = 0;
 
-// likeBtn.onclick = function () {
-//   likecount += 1;
-//   button1.innerHTML = "👍 " + likecount;
-// };
+likeBtn.onclick = function (e) {
+  e.preventDefault();
+  likecount += 1;
+  likeBtn.innerHTML = "👍 " + likecount;
+};
 
-// button2.onclick = function () {
-//   dislikecount += 1;
-//   button2.innerHTML = "👎  " + dislikecount;
-// };
+dislikeBtn.onclick = function (e) {
+  e.preventDefault();
+  dislikecount += 1;
+  dislikeBtn.innerHTML = "👎 " + dislikecount;
+};
 
-// button3.onclick = function () {
-//   lovecount += 1;
-//   button3.innerHTML = "😍 " + lovecount;
-// };
+loveBtn.onclick = function (e) {
+  e.preventDefault();
+  lovecount += 1;
+  loveBtn.innerHTML = "😍 " + lovecount;
+};
 
 // ********** Submit message function ********
 
