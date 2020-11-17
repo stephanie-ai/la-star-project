@@ -14,8 +14,13 @@
   visibility: hidden;
 }
 
+#postContainer {
+  border: 2px solid black;
+}
+
 #buttonContainer {
   visibility: hidden;
+  border: 2px solid grey;
 }
 
 .reactionButtons {
