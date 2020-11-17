@@ -120,7 +120,7 @@ function createPost(postData) {
   formReplySubmitButton.setAttribute("type", "submit");
   newMessage.textContent = `Anonymous says: ${postData.content}`;
   createReactionButtons(newPost);
-  createReplyButton(newPost);
+  createReplyButton(newPost, formReply);
   formReply.append(formReplyInput);
   formReply.append(formReplySubmitButton);
   newPost.append(formReply);
@@ -130,10 +130,14 @@ function createPost(postData) {
   formReply.style.visibility = "hidden";
 }
 
-function createReplyButton(newPost) {
+function createReplyButton(newPost, formReply) {
   const replyButton = document.createElement("button");
   replyButton.textContent = "Reply";
   // newPost.append(replyButton);
+  replyButton.addEventListener("click", hiddenForm);
+  function hiddenForm() {
+    formReply.style.visibility = "visible";
+  }
   newPost.appendChild(replyButton);
 }
 
