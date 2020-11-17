@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+
+#replyForm {
+  height: auto;
+  width: 50%;
+  background: pink;
+  visibility: hidden;
+  background: rgb(190, 190, 190);
+}
+
+#replyButton {
+  visibility: hidden;
+}
+
+#postContainer {
+  border: 2px solid black;
+}
+
+#buttonContainer {
+  visibility: hidden;
+  border: 2px solid grey;
+}
+
+.reactionButtons {
+  height: 30px;
+}
+
+
+/* reaction emoji */
+.like::before {
+  content: "👍 ";
+}
+
+.dislike::before {
+  content: "👎 ";
+}
+
+.love::before {
+  content: "❤️ ";
+}
+
+.like, .dislike, .love{
+  border: black;
+  color: black;
+}
