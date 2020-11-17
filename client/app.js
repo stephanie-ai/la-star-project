@@ -1,12 +1,10 @@
 // ********** emoji reaction function ********
 
-
 // function createElementButton(){
 // const likeBtn = document.createElement("button");
 // const dislikeBtn = document.createElement("button");
 // const loveBtn = document.createElement("button");
 // }
-
 
 // let likecount = 0;
 // let dislikecount = 0;
@@ -34,7 +32,6 @@
 //   disable()
 // };
 
-
 //helper function to disable every other un-clicked button.
 // function disable(){
 // const buttons = [likeBtn, dislikeBtn, loveBtn];
@@ -56,12 +53,8 @@ function getAllPosts() {
 const form = document.querySelector("#postForm");
 form.addEventListener("submit", megaFunction);
 
-const formReply = document.querySelector("#postContainer");
-const postList = document.querySelector("#replyContent");
-const buttonContainer = document.querySelector("#buttonContainer");
+const postList = document.querySelector("#posts");
 // const replyButton = document.getElementById("replyButton");
-
-
 
 function submitPost(e) {
   e.preventDefault();
@@ -76,7 +69,7 @@ function submitPost(e) {
   //   dislikes: e.target.dislikes.value,
   //   loves: e.target.loves.value,
   // }
-  
+
   createPost(postData);
 
   const options = {
@@ -101,8 +94,8 @@ function appendPosts(data) {
   data.forEach(createPost);
 }
 
-
-function createReactionButtons() {
+function createReactionButtons(newPost) {
+  const buttonContainer = document.createElement("div");
   let likeBtn = document.createElement("button");
   let dislikeBtn = document.createElement("button");
   let loveBtn = document.createElement("button");
@@ -114,35 +107,47 @@ function createReactionButtons() {
   likeBtn.classList.add("like");
   dislikeBtn.classList.add("dislike");
   loveBtn.classList.add("love");
+  newPost.append(buttonContainer);
 }
-
 
 function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
+  const formReply = document.createElement("form");
+  const formReplyInput = document.createElement("input");
+  formReplyInput.setAttribute("type", "text");
+  const formReplySubmitButton = document.createElement("input");
+  formReplySubmitButton.setAttribute("type", "submit");
   newMessage.textContent = `Anonymous says: ${postData.content}`;
-  formReply.append(newPost);
-  formReply.insertAdjacentElement("afterbegin", newPost);
+  createReactionButtons(newPost);
+  createReplyButton(newPost, formReply);
+  formReply.append(formReplyInput);
+  formReply.append(formReplySubmitButton);
+  newPost.append(formReply);
+  postList.append(newPost);
+  postList.insertAdjacentElement("afterbegin", newPost);
   newPost.insertAdjacentElement("afterbegin", newMessage);
-  formReply.style.visibility = "visible";
-  
+  formReply.style.visibility = "hidden";
 }
 
-function createReplyButton() {
+function createReplyButton(newPost, formReply) {
   const replyButton = document.createElement("button");
   replyButton.textContent = "Reply";
-  // newPost.append(replyButton)
-  formReply.append(replyButton);
+  // newPost.append(replyButton);
+  replyButton.addEventListener("click", hiddenForm);
+  function hiddenForm() {
+    formReply.style.visibility == "hidden"
+      ? (formReply.style.visibility = "visible")
+      : (formReply.style.visibility = "hidden");
+  }
+  newPost.appendChild(replyButton);
 }
-
 
 function megaFunction(e) {
   submitPost(e);
-  createReactionButtons();
-  createReplyButton();
+
+  // createReplyButton();
   // createElementButton()
 }
-
-
 
 // postList.style.visibility = "visible";
