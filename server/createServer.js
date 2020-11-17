@@ -7,9 +7,14 @@ app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors());
 
-const anonymousPosts = [
-  { id: 1, content: "This is the first post", likes: 0, dislikes: 0, loves: 0 },
-];
+const fs = require("fs");
+
+const data = fs.readFileSync('anonymousPosts.json');
+const anonymousPosts = JSON.parse(data);
+
+// const anonymousPosts = [
+//   { id: 1, content: "This is the first post", likes: 0, dislikes: 0, loves: 0 },
+// ];
 
 app.get("/", (req, res) => {
   res.send("Hello tara!");
