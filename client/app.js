@@ -136,7 +136,9 @@ function createReplyButton(newPost, formReply) {
   // newPost.append(replyButton);
   replyButton.addEventListener("click", hiddenForm);
   function hiddenForm() {
-    formReply.style.visibility = "visible";
+    formReply.style.visibility == "hidden"
+      ? (formReply.style.visibility = "visible")
+      : (formReply.style.visibility = "hidden");
   }
   newPost.appendChild(replyButton);
 }
