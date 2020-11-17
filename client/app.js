@@ -53,6 +53,9 @@ function getAllPosts() {
 const form = document.querySelector("#postForm");
 form.addEventListener("submit", megaFunction);
 
+
+
+
 const postList = document.querySelector("#posts");
 // const replyButton = document.getElementById("replyButton");
 
@@ -114,10 +117,18 @@ function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
   const formReply = document.createElement("form");
+  //create reply input and submitbtn
   const formReplyInput = document.createElement("input");
   formReplyInput.setAttribute("type", "text");
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
+  //create Giphy replyBTN
+  // const formGiphyInput = document.createElement("input");
+  // formGiphyInput.setAttribute("type", "text");
+  // const formGiphySubmitButton = document.createElement("input");
+  // formGiphySubmitButton.setAttribute("type", "submit");
+
+
   newMessage.textContent = `Anonymous says: ${postData.content}`;
   createReactionButtons(newPost);
   createReplyButton(newPost, formReply);
@@ -151,3 +162,55 @@ function megaFunction(e) {
 }
 
 // postList.style.visibility = "visible";
+
+
+//Giphy search functionality
+
+//pseudo code:
+//create a Giphy unique key let APIKey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
+//syntax for api call url = api + key + result limit + key/search word
+
+//3 event listers:
+
+//button click
+//text submit
+//text reply
+
+
+//fetching api
+const gifBtn = document.getElementById("gif");
+gifBtn.addEventListener("click", gifapiCall);
+
+function gifapiCall(e){
+  e.preventDefault();
+  console.log("gif has been clicked")
+
+
+let appkey = 'Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB';
+
+let url = `https://api.giphy.com/v1/gifs/search?api_key=${appkey}&limit=10&q=`
+let str = document.getElementById("giphyInput").value.trim();
+console.log(str)
+url = url.concat(str);
+
+fetch(url)
+.then(res => res.json())
+.then(content =>{
+    // console.log the content received to check: data, pagination, and meta to extract the information we need.
+    // console.log(content.data);
+    // console.log("META", content.meta);
+    //second url we receive from the server to render the image/emoji/text we want.
+    let gifimg = document.createElement('img');
+    gifimg.src = content.data[Math.floor(content.data.length * Math.random())].images.downsized.url;
+    gifimg.classList.add('imgFormat');
+    let gifContainer = document.getElementById("imageContainer");
+    gifContainer.append(gifimg);
+    gifContainer.insertAdjacentElement("afterbegin", gifimg);
+   
+})
+.catch(err => {
+console.log("AAAAAAHHH we got an error!!", err.warn);
+    })
+  }
+
+
