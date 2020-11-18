@@ -6,9 +6,10 @@
     <title>LaStar</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"></script>
     <link rel="stylesheet" href="style.css">
-    <script defer src="app.js"></script>
+    <script defer src="bundle.js"></script>
+    
 </head>
-
+<body>
     <form id="postForm">
         <label for="content">Type your message</label>
         <input type="text" id="content" maxlength="160" placeholder="max length 160 characters"/>
@@ -20,7 +21,12 @@
         <label for="giphy">or search your gif</label>
         <input id="giphyInput" type="search" />
         <button id="gif">GIF</button>
+        <button id="gridBtn">GIF Grid</button>
     </form>
+
+    <section id="targetEl">
+
+    </section>
 
       <section id="imageContainer">
 

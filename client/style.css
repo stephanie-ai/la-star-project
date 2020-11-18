@@ -27,6 +27,19 @@
   height: 30px;
 }
 
+#targetEl{
+  border: 1px solid red;
+}
+
+.giphy-gif-img{
+  height:100px;
+  width: auto;
+  border-radius: 10%;
+}
+.giphy-grid > div{
+  display: flex;
+  justify-content: space-around;
+}
 
 /* reaction emoji */
 .like::before {
