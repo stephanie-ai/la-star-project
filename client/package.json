@@ -1,0 +1,19 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify app.js > bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@giphy/js-components": "^4.0.0-alpha.0",
+    "@giphy/js-fetch-api": "^2.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0"
+  }
+}
