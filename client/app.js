@@ -51,10 +51,7 @@ function getAllPosts() {
 // ********** Submit message function ********
 
 const form = document.querySelector("#postForm");
-form.addEventListener("submit", megaFunction);
-
-
-
+form.addEventListener("submit", submitPost);
 
 const postList = document.querySelector("#posts");
 // const replyButton = document.getElementById("replyButton");
@@ -73,8 +70,6 @@ function submitPost(e) {
   //   loves: e.target.loves.value,
   // }
 
-  createPost(postData);
-
   const options = {
     method: "POST",
     body: JSON.stringify(postData),
@@ -90,12 +85,44 @@ function submitPost(e) {
     // debugger
     // console.log('debugger working')
     .catch(console.warn);
+
+  createPost(postData);
 }
 
 function appendPosts(data) {
   data = JSON.parse(JSON.stringify(data));
   data.forEach(createPost);
 }
+
+// ***** Trying to create submit reply function ******
+
+function submitReply(e) {
+  e.preventDefault();
+  const replyData = {
+    // id: e.target.id.value,
+    replies: e.target.replies.value, //cannot read property type of value
+  };
+  // console.log(e.target.replies.value);
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(replyData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch("http://localhost:3012/anonymousReplies", options)
+    .then((r) => r.json())
+    // .then(createPost)
+    .catch(console.warn);
+
+  repliesFunction(replyData); //need a new function
+}
+
+// function CreateReply
+
+// **************************************
 
 function createReactionButtons(newPost) {
   const buttonContainer = document.createElement("div");
@@ -116,18 +143,22 @@ function createReactionButtons(newPost) {
 function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
+  // create form for replies
   const formReply = document.createElement("form");
   //create reply input and submitbtn
   const formReplyInput = document.createElement("input");
   formReplyInput.setAttribute("type", "text");
+  formReplyInput.setAttribute("name", "replies");
+  formReplyInput.setAttribute("value", "");
+
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
+
   //create Giphy replyBTN
   // const formGiphyInput = document.createElement("input");
   // formGiphyInput.setAttribute("type", "text");
   // const formGiphySubmitButton = document.createElement("input");
   // formGiphySubmitButton.setAttribute("type", "submit");
-
 
   newMessage.textContent = `Anonymous says: ${postData.content}`;
   createReactionButtons(newPost);
@@ -139,6 +170,18 @@ function createPost(postData) {
   postList.insertAdjacentElement("afterbegin", newPost);
   newPost.insertAdjacentElement("afterbegin", newMessage);
   formReply.style.visibility = "hidden";
+
+  // add event listener to submit button
+  formReply.addEventListener("submit", submitReply);
+}
+
+function repliesFunction() {
+  console.log("function works");
+  const newReplyContainer = document.createElement("div");
+  const newReplyMessage = document.createElement("p");
+  newReplyMessage.textContent = `${replyData.reply}`;
+  newReplyContainer.append(newReplyMessage);
+  formReply.append(newReplyContainer);
 }
 
 function createReplyButton(newPost, formReply) {
@@ -154,15 +197,12 @@ function createReplyButton(newPost, formReply) {
   newPost.appendChild(replyButton);
 }
 
-function megaFunction(e) {
-  submitPost(e);
+// function megaFunction(e) {
+//   submitPost(e);
 
-  // createReplyButton();
-  // createElementButton()
-}
-
-// postList.style.visibility = "visible";
-
+//   // createReplyButton();
+//   // createElementButton()
+// }
 
 //Giphy search functionality
 
@@ -176,41 +216,39 @@ function megaFunction(e) {
 //text submit
 //text reply
 
-
 //fetching api
 const gifBtn = document.getElementById("gif");
 gifBtn.addEventListener("click", gifapiCall);
 
-function gifapiCall(e){
+function gifapiCall(e) {
   e.preventDefault();
-  console.log("gif has been clicked")
+  console.log("gif has been clicked");
 
+  let appkey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
 
-let appkey = 'Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB';
+  let url = `https://api.giphy.com/v1/gifs/search?api_key=${appkey}&limit=10&q=`;
+  let str = document.getElementById("giphyInput").value.trim();
+  console.log(str);
+  url = url.concat(str);
 
-let url = `https://api.giphy.com/v1/gifs/search?api_key=${appkey}&limit=10&q=`
-let str = document.getElementById("giphyInput").value.trim();
-console.log(str)
-url = url.concat(str);
-
-fetch(url)
-.then(res => res.json())
-.then(content =>{
-    // console.log the content received to check: data, pagination, and meta to extract the information we need.
-    // console.log(content.data);
-    // console.log("META", content.meta);
-    //second url we receive from the server to render the image/emoji/text we want.
-    let gifimg = document.createElement('img');
-    gifimg.src = content.data[Math.floor(content.data.length * Math.random())].images.downsized.url;
-    gifimg.classList.add('imgFormat');
-    let gifContainer = document.getElementById("imageContainer");
-    gifContainer.append(gifimg);
-    gifContainer.insertAdjacentElement("afterbegin", gifimg);
-   
-})
-.catch(err => {
-console.log("AAAAAAHHH we got an error!!", err.warn);
+  fetch(url)
+    .then((res) => res.json())
+    .then((content) => {
+      // console.log the content received to check: data, pagination, and meta to extract the information we need.
+      // console.log(content.data);
+      // console.log("META", content.meta);
+      //second url we receive from the server to render the image/emoji/text we want.
+      let gifimg = document.createElement("img");
+      gifimg.src =
+        content.data[
+          Math.floor(content.data.length * Math.random())
+        ].images.downsized.url;
+      gifimg.classList.add("imgFormat");
+      let gifContainer = document.getElementById("imageContainer");
+      gifContainer.append(gifimg);
+      gifContainer.insertAdjacentElement("afterbegin", gifimg);
     })
-  }
-
-
+    .catch((err) => {
+      console.log("AAAAAAHHH we got an error!!", err.warn);
+    });
+}
