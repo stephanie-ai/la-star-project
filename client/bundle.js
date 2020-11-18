@@ -185,7 +185,6 @@ const GiphyFetch = require("@giphy/js-fetch-api").GiphyFetch;
 const renderGrid = require("@giphy/js-components").renderGrid;
 //const throttle = require('throttle-debounce').throttle;
 
-   
 
 const gridBtn = document.getElementById("gridBtn");
 gridBtn.addEventListener("click", comonentapiCall);
@@ -203,7 +202,8 @@ function comonentapiCall(e){
     // fetch 10 gifs at a time as the user scrolls (offset is handled by the grid)
     const fetchGifs = () => gf.trending({ offset: 1, limit: 10 });
     // render a grid
-    renderGrid({ width: 800, fetchGifs }, targetEl)
+    renderGrid({ width: 800, fetchGifs, onGifClick: (gif, e) => {
+      e.preventDefault(); console.log(gif.images.downsized.url)}}, targetEl);
 
 
 }
