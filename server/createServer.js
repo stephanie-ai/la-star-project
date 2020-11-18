@@ -12,8 +12,8 @@ const fs = require("fs");
 const dataPosts = fs.readFileSync("anonymousPosts.json");
 const anonymousPosts = JSON.parse(dataPosts);
 
-const dataReplies = fs.readFileSync("anonymousReplies.json");
-const anonymousReplies = JSON.parse(dataReplies);
+// const dataReplies = fs.readFileSync("anonymousReplies.json");
+// const anonymousReplies = JSON.parse(dataReplies);
 
 // const anonymousPosts = [
 //   { id: 1, content: "This is the first post", likes: 0, dislikes: 0, loves: 0 },
@@ -30,7 +30,7 @@ app.get("/anonymousPosts", (req, res) => {
 
 app.get("/anonymousReplies", (req, res) => {
   // res.send("connected to server");
-  res.send(anonymousReplies);
+  res.send(anonymousPosts);
 });
 
 app.post("/anonymousPosts", (req, res) => {
