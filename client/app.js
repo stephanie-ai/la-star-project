@@ -42,16 +42,14 @@ function submitPost(e) {
   e.target.content.value = "";
 }
 
-
 // ********** Submit Reply Function **********
 
 function submitReply(e) {
   e.preventDefault();
   const replyData = {
     id: e.target.getAttribute("postId"),
-    reply: e.target.replies.value, 
+    reply: e.target.replies.value,
   };
-
 
   const options = {
     method: "POST",
@@ -71,7 +69,7 @@ function submitReply(e) {
 
 // ********** Function Send Reaction **********
 
-function submitLike(e){
+function submitLike(e) {
   e.preventDefault();
 
   const likeData = {
@@ -87,13 +85,11 @@ function submitLike(e){
   };
 
   fetch("http://localhost:3012/anonymousLike", options)
-  .then((r) => r.json())
-  .catch(console.warn);
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
-
-
-function submitDislike(e){
+function submitDislike(e) {
   e.preventDefault();
 
   const dislikeData = {
@@ -109,12 +105,11 @@ function submitDislike(e){
   };
 
   fetch("http://localhost:3012/anonymousDislike", options)
-  .then((r) => r.json())
-  .catch(console.warn);
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
-
-function submitLove(e){
+function submitLove(e) {
   e.preventDefault();
 
   const loveData = {
@@ -130,8 +125,8 @@ function submitLove(e){
   };
 
   fetch("http://localhost:3012/anonymousLove", options)
-  .then((r) => r.json())
-  .catch(console.warn);
+    .then((r) => r.json())
+    .catch(console.warn);
 }
 
 // ********** Create Reaction Button Function **********
@@ -164,21 +159,20 @@ function createReactionButtons(newPost, postId) {
 function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
-  
+
   // create form for replies
   const formReply = document.createElement("form");
-  
+
   //create reply input and submitbtn
   const formReplyInput = document.createElement("input");
   formReplyInput.setAttribute("type", "text");
   formReplyInput.setAttribute("name", "replies");
   formReplyInput.setAttribute("value", " ");
-  
+
   //set id to post to use later in the reply
   formReply.setAttribute("postId", postData.id);
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
-
 
   newMessage.textContent = `Anonymous says: ${postData.content}`;
   createReactionButtons(newPost, postData.id);
@@ -202,7 +196,6 @@ function repliesFunction(replyData, formReply) {
   newReplyMessage.textContent = `${replyData.reply}`;
   newReplyContainer.append(newReplyMessage);
   formReply.append(newReplyContainer);
-
 }
 
 // ********** Create Reply Button Function **********
@@ -219,20 +212,8 @@ function createReplyButton(newPost, formReply) {
   newPost.appendChild(replyButton);
 }
 
-
 // ********** Giphy Search Functionality **********
 
-//pseudo code:
-//create a Giphy unique key let APIKey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
-//syntax for api call url = api + key + result limit + key/search word
-
-//3 event listers:
-
-//button click
-//text submit
-//text reply
-
-//fetching api
 const gifBtn = document.getElementById("gif");
 gifBtn.addEventListener("click", gifapiCall);
 
@@ -248,9 +229,9 @@ function gifapiCall(e) {
   url = url.concat(str);
 
   fetch(url)
-    .then((res) => res.json())
+    .then((r) => r.json())
     .then((content) => {
-      // console.log the content received to check: data, pagination, and meta to extract the information we need.
+      // console.log for live demonstration
       // console.log(content.data);
       // console.log("META", content.meta);
       //second url we receive from the server to render the image/emoji/text we want.
@@ -260,10 +241,11 @@ function gifapiCall(e) {
           Math.floor(content.data.length * Math.random())
         ].images.downsized.url;
       gifimg.classList.add("imgFormat");
-      let gifContainer = document.getElementById("imageContainer");
+      let gifContainer = document.getElementById("posts");
       gifContainer.append(gifimg);
       gifContainer.insertAdjacentElement("afterbegin", gifimg);
     })
+    .then(createPost)
     .catch((err) => {
       console.log("AAAAAAHHH we got an error!!", err.warn);
     });
