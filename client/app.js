@@ -87,6 +87,8 @@ function submitPost(e) {
     .catch(console.warn);
 
   createPost(postData);
+  e.target.content.value = "";
+
 }
 
 function appendPosts(data) {
@@ -99,8 +101,8 @@ function appendPosts(data) {
 function submitReply(e) {
   e.preventDefault();
   const replyData = {
-    // id: e.target.id.value,
-    replies: e.target.replies.value, //cannot read property type of value
+    id: e.target.getAttribute("postId"),
+    reply: e.target.replies.value, //cannot read property type of value
   };
   // console.log(e.target.replies.value);
 
@@ -117,7 +119,8 @@ function submitReply(e) {
     // .then(createPost)
     .catch(console.warn);
 
-  repliesFunction(replyData); //need a new function
+  repliesFunction(replyData, e.target); //need a new function
+  e.target.replies.value = "";
 }
 
 // function CreateReply
@@ -149,7 +152,9 @@ function createPost(postData) {
   const formReplyInput = document.createElement("input");
   formReplyInput.setAttribute("type", "text");
   formReplyInput.setAttribute("name", "replies");
-  formReplyInput.setAttribute("value", "");
+  formReplyInput.setAttribute("value", " ");
+  //set id to post to use later in the reply
+  formReply.setAttribute("postId", postData.id);
 
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
@@ -175,13 +180,13 @@ function createPost(postData) {
   formReply.addEventListener("submit", submitReply);
 }
 
-function repliesFunction() {
-  console.log("function works");
+function repliesFunction(replyData, formReply) {
   const newReplyContainer = document.createElement("div");
   const newReplyMessage = document.createElement("p");
   newReplyMessage.textContent = `${replyData.reply}`;
   newReplyContainer.append(newReplyMessage);
   formReply.append(newReplyContainer);
+
 }
 
 function createReplyButton(newPost, formReply) {

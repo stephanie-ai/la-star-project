@@ -36,22 +36,25 @@ app.get("/anonymousReplies", (req, res) => {
 app.post("/anonymousPosts", (req, res) => {
   const data = req.body;
   const newPostId = anonymousPosts.length + 1;
-  const newPost = { id: newPostId, ...data };
+  const newPost = { id: newPostId, likes:0, dislikes:0, loves:0, replies:[], ...data };
   anonymousPosts.push(newPost);
   res.status(201).send(newPost);
 });
 
 app.post("/anonymousReplies", (req, res) => {
   const data = req.body;
-  console.log(req.body);
-  // const newReplyId = anonymousPosts.length + 1;
-  //if postId==true
-  //   postId.reply.push(newReply)
-  // }
-  // const dataReceived
-  const newReply = { reply: dataReceived, ...data };
-  anonymousPosts.push(newReply);
-  res.status(201).send(newReply);
+  const post = anonymousPosts.filter(p => p.id == data.id)[0];
+  post.replies.push(data.reply);
+  res.status(201).send(post);
 });
+
+// app.post("/anonymousLike", (req, res) => {
+//   const data = req.body;
+//   const post = anonymousPosts.filter(p => p.id == data.id)[0];
+//   ++post.likes;
+//   res.status(201).send(post);
+// });
+
+
 
 module.exports = app;
