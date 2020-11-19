@@ -45,3 +45,10 @@
   border: black;
   color: black;
 }
+
+.imgFormat{
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 10%;
+}
