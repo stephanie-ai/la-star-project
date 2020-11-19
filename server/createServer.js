@@ -12,15 +12,8 @@ const fs = require("fs");
 const dataPosts = fs.readFileSync("anonymousPosts.json");
 const anonymousPosts = JSON.parse(dataPosts);
 
-// const dataReplies = fs.readFileSync("anonymousReplies.json");
-// const anonymousReplies = JSON.parse(dataReplies);
-
-// const anonymousPosts = [
-//   { id: 1, content: "This is the first post", likes: 0, dislikes: 0, loves: 0 },
-// ];
-
+//api GET call
 app.get("/", (req, res) => {
-  // res.send(anonymousPosts, anonymousReplies);
   res.send("Hello La Star");
 });
 
@@ -29,9 +22,24 @@ app.get("/anonymousPosts", (req, res) => {
 });
 
 app.get("/anonymousReplies", (req, res) => {
-  // res.send("connected to server");
   res.send(anonymousPosts);
 });
+
+app.get("/anonymousLike", (req, res) => {
+  res.send(anonymousPosts);
+});
+
+app.get("/anonymousDislike", (req, res) => {
+  res.send(anonymousPosts);
+});
+
+
+app.get("/anonymousLove", (req, res) => {
+  res.send(anonymousPosts);
+});
+
+
+//api POST call
 
 app.post("/anonymousPosts", (req, res) => {
   const data = req.body;
@@ -43,18 +51,33 @@ app.post("/anonymousPosts", (req, res) => {
 
 app.post("/anonymousReplies", (req, res) => {
   const data = req.body;
+  const newReply = data.reply;
   const post = anonymousPosts.filter(p => p.id == data.id)[0];
-  post.replies.push(data.reply);
+  post.replies.push(newReply);
   res.status(201).send(post);
 });
 
-// app.post("/anonymousLike", (req, res) => {
-//   const data = req.body;
-//   const post = anonymousPosts.filter(p => p.id == data.id)[0];
-//   ++post.likes;
-//   res.status(201).send(post);
-// });
+app.post("/anonymousLike", (req, res) => {
+  const data = req.body;
+  const post = anonymousPosts.filter(p => p.id == data.id)[0];
+  post.likes++;
+  res.status(201).send(post);
+});
 
+app.post("/anonymousDislike", (req, res) => {
+  const data = req.body;
+  const post = anonymousPosts.filter(p => p.id == data.id)[0];
+  post.dislikes++;
+  res.status(201).send(post);
+});
+
+
+app.post("/anonymousLove", (req, res) => {
+  const data = req.body;
+  const post = anonymousPosts.filter(p => p.id == data.id)[0];
+  post.loves++;
+  res.status(201).send(post);
+});
 
 
 module.exports = app;

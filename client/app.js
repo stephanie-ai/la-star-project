@@ -1,44 +1,4 @@
-// ********** emoji reaction function ********
-
-// function createElementButton(){
-// const likeBtn = document.createElement("button");
-// const dislikeBtn = document.createElement("button");
-// const loveBtn = document.createElement("button");
-// }
-
-// let likecount = 0;
-// let dislikecount = 0;
-// let lovecount = 0;
-
-// likeBtn.onclick = function (e) {
-//   e.preventDefault();
-//   likecount += 1;
-//   likeBtn.innerHTML =  likecount;
-//   console.log(likecount);
-//   disable();
-// };
-
-// dislikeBtn.onclick = function (e) {
-//   e.preventDefault();
-//   dislikecount += 1;
-//   dislikeBtn.innerHTML = dislikecount;
-//   disable()
-// };
-
-// loveBtn.onclick = function (e) {
-//   e.preventDefault();
-//   lovecount += 1;
-//   loveBtn.innerHTML = lovecount;
-//   disable()
-// };
-
-//helper function to disable every other un-clicked button.
-// function disable(){
-// const buttons = [likeBtn, dislikeBtn, loveBtn];
-// buttons.forEach(button => button.disabled = true)
-// }
-
-// ********** Get all previous posts ********
+// ********** Get all previous posts function ********
 getAllPosts();
 
 function getAllPosts() {
@@ -47,14 +7,17 @@ function getAllPosts() {
     .then(appendPosts)
     .catch(console.warn);
 }
+function appendPosts(data) {
+  data = JSON.parse(JSON.stringify(data));
+  data.forEach(createPost);
+}
 
-// ********** Submit message function ********
+// ********** Submit Message Function ********
 
 const form = document.querySelector("#postForm");
 form.addEventListener("submit", submitPost);
 
 const postList = document.querySelector("#posts");
-// const replyButton = document.getElementById("replyButton");
 
 function submitPost(e) {
   e.preventDefault();
@@ -62,13 +25,6 @@ function submitPost(e) {
   const postData = {
     content: e.target.content.value,
   };
-
-  //find a way to pass the count number to server
-  // const emojiReactionCounter ={
-  //   likes: e.target.likes.value,
-  //   dislikes: e.target.dislikes.value,
-  //   loves: e.target.loves.value,
-  // }
 
   const options = {
     method: "POST",
@@ -80,31 +36,22 @@ function submitPost(e) {
 
   fetch("http://localhost:3012/anonymousPosts", options)
     .then((r) => r.json())
-    // .then(createReactionButtons)
-    // .then(createReplyButton)
-    // debugger
-    // console.log('debugger working')
+    .then(createPost)
     .catch(console.warn);
 
-  createPost(postData);
   e.target.content.value = "";
-
 }
 
-function appendPosts(data) {
-  data = JSON.parse(JSON.stringify(data));
-  data.forEach(createPost);
-}
 
-// ***** Trying to create submit reply function ******
+// ********** Submit Reply Function **********
 
 function submitReply(e) {
   e.preventDefault();
   const replyData = {
     id: e.target.getAttribute("postId"),
-    reply: e.target.replies.value, //cannot read property type of value
+    reply: e.target.replies.value, 
   };
-  // console.log(e.target.replies.value);
+
 
   const options = {
     method: "POST",
@@ -116,18 +63,80 @@ function submitReply(e) {
 
   fetch("http://localhost:3012/anonymousReplies", options)
     .then((r) => r.json())
-    // .then(createPost)
     .catch(console.warn);
 
-  repliesFunction(replyData, e.target); //need a new function
+  repliesFunction(replyData, e.target);
   e.target.replies.value = "";
 }
 
-// function CreateReply
+// ********** Function Send Reaction **********
 
-// **************************************
+function submitLike(e){
+  e.preventDefault();
 
-function createReactionButtons(newPost) {
+  const likeData = {
+    id: e.target.getAttribute("postId"),
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(likeData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch("http://localhost:3012/anonymousLike", options)
+  .then((r) => r.json())
+  .catch(console.warn);
+}
+
+
+
+function submitDislike(e){
+  e.preventDefault();
+
+  const dislikeData = {
+    id: e.target.getAttribute("postId"),
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(dislikeData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch("http://localhost:3012/anonymousDislike", options)
+  .then((r) => r.json())
+  .catch(console.warn);
+}
+
+
+function submitLove(e){
+  e.preventDefault();
+
+  const loveData = {
+    id: e.target.getAttribute("postId"),
+  };
+
+  const options = {
+    method: "POST",
+    body: JSON.stringify(loveData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch("http://localhost:3012/anonymousLove", options)
+  .then((r) => r.json())
+  .catch(console.warn);
+}
+
+// ********** Create Reaction Button Function **********
+
+function createReactionButtons(newPost, postId) {
   const buttonContainer = document.createElement("div");
   let likeBtn = document.createElement("button");
   let dislikeBtn = document.createElement("button");
@@ -140,33 +149,39 @@ function createReactionButtons(newPost) {
   likeBtn.classList.add("like");
   dislikeBtn.classList.add("dislike");
   loveBtn.classList.add("love");
+  likeBtn.setAttribute("postId", postId);
+  dislikeBtn.setAttribute("postId", postId);
+  loveBtn.setAttribute("postId", postId);
   newPost.append(buttonContainer);
+  //event listeners for reactions
+  likeBtn.addEventListener("click", submitLike);
+  dislikeBtn.addEventListener("click", submitDislike);
+  loveBtn.addEventListener("click", submitLove);
 }
+
+// ********** Create New Posts Function **********
 
 function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
+  
   // create form for replies
   const formReply = document.createElement("form");
+  
   //create reply input and submitbtn
   const formReplyInput = document.createElement("input");
   formReplyInput.setAttribute("type", "text");
   formReplyInput.setAttribute("name", "replies");
   formReplyInput.setAttribute("value", " ");
+  
   //set id to post to use later in the reply
   formReply.setAttribute("postId", postData.id);
-
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
 
-  //create Giphy replyBTN
-  // const formGiphyInput = document.createElement("input");
-  // formGiphyInput.setAttribute("type", "text");
-  // const formGiphySubmitButton = document.createElement("input");
-  // formGiphySubmitButton.setAttribute("type", "submit");
 
   newMessage.textContent = `Anonymous says: ${postData.content}`;
-  createReactionButtons(newPost);
+  createReactionButtons(newPost, postData.id);
   createReplyButton(newPost, formReply);
   formReply.append(formReplyInput);
   formReply.append(formReplySubmitButton);
@@ -175,10 +190,11 @@ function createPost(postData) {
   postList.insertAdjacentElement("afterbegin", newPost);
   newPost.insertAdjacentElement("afterbegin", newMessage);
   formReply.style.visibility = "hidden";
-
   // add event listener to submit button
   formReply.addEventListener("submit", submitReply);
 }
+
+// ********** Create New Replies Function **********
 
 function repliesFunction(replyData, formReply) {
   const newReplyContainer = document.createElement("div");
@@ -189,10 +205,11 @@ function repliesFunction(replyData, formReply) {
 
 }
 
+// ********** Create Reply Button Function **********
+
 function createReplyButton(newPost, formReply) {
   const replyButton = document.createElement("button");
   replyButton.textContent = "Reply";
-  // newPost.append(replyButton);
   replyButton.addEventListener("click", hiddenForm);
   function hiddenForm() {
     formReply.style.visibility == "hidden"
@@ -202,14 +219,8 @@ function createReplyButton(newPost, formReply) {
   newPost.appendChild(replyButton);
 }
 
-// function megaFunction(e) {
-//   submitPost(e);
 
-//   // createReplyButton();
-//   // createElementButton()
-// }
-
-//Giphy search functionality
+// ********** Giphy Search Functionality **********
 
 //pseudo code:
 //create a Giphy unique key let APIKey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
