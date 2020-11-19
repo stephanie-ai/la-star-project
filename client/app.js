@@ -133,6 +133,7 @@ function submitLove(e) {
 
 function createReactionButtons(newPost, postId) {
   const buttonContainer = document.createElement("div");
+  buttonContainer.setAttribute('class', 'reactionContainer');
   let likeBtn = document.createElement("button");
   let dislikeBtn = document.createElement("button");
   let loveBtn = document.createElement("button");
@@ -202,6 +203,7 @@ function repliesFunction(replyData, formReply) {
 
 function createReplyButton(newPost, formReply) {
   const replyButton = document.createElement("button");
+  replyButton.setAttribute('class', 'replyBtn')
   replyButton.textContent = "Reply";
   replyButton.addEventListener("click", hiddenForm);
   function hiddenForm() {
