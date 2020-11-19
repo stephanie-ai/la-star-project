@@ -4,9 +4,9 @@
   "description": "anonymous message api",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
     "start": "nodemon startServer.js",
-    "coverage": "mocha nyc"
+    "test": "mocha",
+    "coverage": "nyc --reporter=text-summary mocha"
   },
   "keywords": [],
   "author": "Tara Steph Paola",
