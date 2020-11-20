@@ -9,7 +9,7 @@ function ani2() {
 function darkFunction() {
     let element = document.body;
     element.classList.toggle("darkMode");
-    //
+
     document.getElementById('cloudAnimation').style.display = 'none';
 
     document.getElementById('header').style.backgroundColor = 'grey';
