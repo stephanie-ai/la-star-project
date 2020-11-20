@@ -39,6 +39,10 @@ app.get("/anonymousLove", (req, res) => {
 
 //api POST call
 
+app.post("/", (req, res) => {
+  res.status(405).send("No Entry!");
+});
+
 app.post("/anonymousPosts", (req, res) => {
   const data = req.body;
   const newPostId = anonymousPosts.length + 1;
