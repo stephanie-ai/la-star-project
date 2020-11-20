@@ -90,22 +90,27 @@ describe("API server", () => {
         .expect(201)
         .expect({ ...replyPost }, done);
     }),
-    it("appends like count by 1", (done) => {
+    it("append like count by 1", (done) => {
       request(api)
         .post("/anonymousPosts")
+        .send({ likes: +1 })
         .expect(201)
-        .expect(
-          {
-            id: 1,
-            content: "This is the first post",
-            likes: 0,
-            dislikes: 0,
-            loves: 0,
-            replies: ["Hello, this is a reply"],
-          },
-          done
-        );
+        .expect({ id: 8, likes: 1, dislikes: 0, loves: 0, replies: [] }, done);
     });
+  it("append dislike count by 1", (done) => {
+    request(api)
+      .post("/anonymousPosts")
+      .send({ dislikes: +1 })
+      .expect(201)
+      .expect({ id: 9, likes: 0, dislikes: 1, loves: 0, replies: [] }, done);
+  });
+  it("append love count by 1", (done) => {
+    request(api)
+      .post("/anonymousPosts")
+      .send({ loves: +1 })
+      .expect(201)
+      .expect({ id: 10, likes: 0, dislikes: 0, loves: 1, replies: [] }, done);
+  });
   it("responds to non existing paths with 404", (done) => {
     request(api).get("/no").expect(404, done);
   }),
