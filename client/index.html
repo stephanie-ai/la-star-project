@@ -6,16 +6,46 @@
     <title>LaStar</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script defer src="app.js"></script>
+    <script defer src="style.js"></script>
 </head>
-
+<body>
+    <!-- <div id="header"> -->
+        <header id="header">
+            <!-- <h1>LaStar</h1> -->
+            <img src="logo.png" id="logo" alt="Logo">
+            <nav>
+                <ul class="nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">Support Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- </div>   -->
+       <section id="backgroundButtons">
+                <div class="btn" onClick="ani()">
+                    Pause
+                </div>
+                
+                <div class="btn" onClick="ani2()">
+                    Restart
+                </div>
+                <div class="modeBtn" onClick="darkFunction()">
+                    Switch Mode
+                </div>
+        </section>
+    
+        <main>
     <form id="postForm">
         <label for="content">Type your message</label>
-        <input type="text" id="content" maxlength="160" placeholder="max length 160 characters"/>
-        <input type="submit" value="Post"> 
-        
+        <br>
+        <input type="text" id="content" maxlength="160" placeholder="max length 160 characters" />
+        <input type="submit" class="postBtn" value="Post"> 
+        <br>
         <form id="giphyForm">
-            <label for="giphy">or search for a gif</label>
+            <label for="giphy">or search for a GIF</label>
             <input id="giphyInput" type="search" />
             <button id="gif">GIF</button>
         </form>
@@ -25,6 +55,12 @@
     <section id="posts">
        
     </section>
-
+</main>
+<div class="container">
+    <div id="cloudAnimation" class="cloud"></div>
+</div>
+    <footer>
+        By Paola, Tara, and Steph
+    </footer>
 </body>
 </html>
