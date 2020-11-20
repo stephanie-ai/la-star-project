@@ -9,8 +9,15 @@ function ani2() {
 function darkFunction() {
     let element = document.body;
     element.classList.toggle("darkMode");
-    ani2();
-    document.getElementById('cloudAnimation').style.display = 'none'
+    //
+    document.getElementById('cloudAnimation').style.display = 'none';
+
+    document.getElementById('header').style.backgroundColor = 'grey';
+
+    document.querySelector('footer').style.backgroundColor = 'grey';
+
 }
+
+
 
 //https://giphy.com/gifs/stars-U3qYN8S0j3bpK

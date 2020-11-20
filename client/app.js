@@ -160,7 +160,7 @@ function createReactionButtons(newPost, postId) {
 function createPost(postData) {
   const newPost = document.createElement("div");
   const newMessage = document.createElement("p");
-
+  newPost.setAttribute('class', 'newPostDiv');
   // create form for replies
   const formReply = document.createElement("form");
 
@@ -169,12 +169,13 @@ function createPost(postData) {
   formReplyInput.setAttribute("type", "text");
   formReplyInput.setAttribute("name", "replies");
   formReplyInput.setAttribute("value", " ");
+  formReplyInput.setAttribute('class', 'formReplyInput');
 
   //set id to post to use later in the reply
   formReply.setAttribute("postId", postData.id);
   const formReplySubmitButton = document.createElement("input");
   formReplySubmitButton.setAttribute("type", "submit");
-
+  formReplySubmitButton.setAttribute('class', 'formReplySubmitButton');
   newMessage.textContent = `Anonymous says: ${postData.content}`;
   createReactionButtons(newPost, postData.id);
   createReplyButton(newPost, formReply);
@@ -194,7 +195,7 @@ function createPost(postData) {
 function repliesFunction(replyData, formReply) {
   const newReplyContainer = document.createElement("div");
   const newReplyMessage = document.createElement("p");
-  newReplyMessage.textContent = `${replyData.reply}`;
+  newReplyMessage.textContent = `Anonymous reply: ${replyData.reply}`;
   newReplyContainer.append(newReplyMessage);
   formReply.append(newReplyContainer);
 }
@@ -244,6 +245,7 @@ function gifapiCall(e) {
         ].images.downsized.url;
       gifimg.classList.add("imgFormat");
       let gifContainer = document.getElementById("posts");
+      gifContainer.setAttribute('class', 'gifPost')
       gifContainer.append(gifimg);
       gifContainer.insertAdjacentElement("afterbegin", gifimg);
     })
