@@ -245,7 +245,10 @@ function gifapiCall(e) {
         ].images.downsized.url;
       gifimg.classList.add("imgFormat");
       let gifContainer = document.getElementById("posts");
-      gifContainer.setAttribute('class', 'gifPost')
+      gifContainer.setAttribute('class', 'gifPost');
+      // let gifContainer = document.createElement("div");
+      // gifContainer.setAttribute('class', 'gifContainer');
+      // postList.append(gifContainer);
       gifContainer.append(gifimg);
       gifContainer.insertAdjacentElement("afterbegin", gifimg);
     })
@@ -254,3 +257,9 @@ function gifapiCall(e) {
       console.log("AAAAAAHHH we got an error!!", err.warn);
     });
 }
+
+// let imageContainer = document.createElement(“div”);
+// imageContainer.setAttribute(‘class’, ‘imageContainer’);
+// imageContainer.append(gifimg);
+// imageContainer.insertAdjacentElement(“afterbegin”, gifimg);
+// gifContainer.append(imageContainer);

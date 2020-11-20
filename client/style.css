@@ -221,12 +221,22 @@ main {
 }
 
 #posts {
-  /* display: flex; */
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
+  /* display: flex;  */
+  /* flex-direction: column;
+  align-items: center; */
+  width: 100%;
+  margin: auto;
   margin-bottom: 60px;
 }
+
+/* .gifContainer {
+  background-color: green;
+}
+
+/* .gifPost {
+  background-color: green;
+ 
+} */
 
 /* #buttonContainer {
   visibility: hidden;
@@ -299,10 +309,13 @@ p {
 } 
 
 .imgFormat{
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border: none;
   border-radius: 10%;
+  margin-left: 170px;
+  margin-top: 10px;
+
 }
 
 footer {
