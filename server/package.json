@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon startServer.js",
+    "start-dev": "nodemon startServer.js",
     "test": "mocha",
     "coverage": "nyc --reporter=text-summary mocha"
   },
