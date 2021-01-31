@@ -222,49 +222,80 @@ function createReplyButton(newPost, formReply) {
 
 // ********** Giphy Search Functionality **********
 
-//pseudo code:
-//create a Giphy unique key let APIKey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
-//syntax for api call url = api + key + result limit + key/search word
 
-//3 event listers:
+//variables importing giphy components:
 
-//button click
-//text submit
-//text reply
+
+const GiphyFetch = require("@giphy/js-fetch-api").GiphyFetch;
+const renderGrid = require("@giphy/js-components").renderGrid;
+//const throttle = require('throttle-debounce').throttle;
+
+
+const gridBtn = document.getElementById("gridBtn");
+gridBtn.addEventListener("click", componentApiCall);
+let appkey = 'Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB';
+
+
+function componentApiCall(e){
+  e.preventDefault();
+  //console.log("gif trend was clicked")
+  
+  const targetEl = document.getElementById("targetEl");
+
+    // use @giphy/js-fetch-api to fetch gifs
+    // apply for a new Web SDK key. Use a separate key for every platform (Android, iOS, Web)
+    const gf = new GiphyFetch(appkey);
+    // fetch 10 gifs at a time as the user scrolls (offset is handled by the grid)
+    const fetchGifs = () => gf.trending({ offset: 20, limit: 10 });
+    // render a grid
+    renderGrid({  fetchGifs, 
+                  onGifClick: (gif, e) => {
+                  e.preventDefault(); 
+                  console.log(gif.images.downsized.url)
+                  },
+                  width: 800,
+                  columns: 5,
+                  gutter: 2,
+                }, 
+                  targetEl);
+
+}
+
 
 //fetching api
 const gifBtn = document.getElementById("gif");
 gifBtn.addEventListener("click", gifapiCall);
 
-function gifapiCall(e) {
+
+function gifapiCall(e){
   e.preventDefault();
-  console.log("gif has been clicked");
+  // console.log("gif has been clicked")
 
-  let appkey = "Tq4DqmIUR4suGhxpH4Ph7U0q1Px5eIOB";
+let url = `https://api.giphy.com/v1/gifs/search?api_key=${appkey}&limit=10&q=`;
+let str = document.getElementById("giphyInput").value.trim();
+//console.log(str)
+url = url.concat(str);
 
-  let url = `https://api.giphy.com/v1/gifs/search?api_key=${appkey}&limit=10&q=`;
-  let str = document.getElementById("giphyInput").value.trim();
-  console.log(str);
-  url = url.concat(str);
+fetch(url)
+.then(res => res.json())
+.then(content =>{
+    // console.log the content received to check: data, pagination, and meta to extract the information we need.
+    // console.log(content.data);
+    // console.log("META", content.meta);
+    //second url we receive from the server to render the image/emoji/text we want.
+    let gifimg = document.createElement('img');
+    gifimg.src = content.data[Math.floor(content.data.length * Math.random())].images.downsized.url;
+    gifimg.classList.add('imgFormat');
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((content) => {
-      // console.log the content received to check: data, pagination, and meta to extract the information we need.
-      // console.log(content.data);
-      // console.log("META", content.meta);
-      //second url we receive from the server to render the image/emoji/text we want.
-      let gifimg = document.createElement("img");
-      gifimg.src =
-        content.data[
-          Math.floor(content.data.length * Math.random())
-        ].images.downsized.url;
-      gifimg.classList.add("imgFormat");
-      let gifContainer = document.getElementById("imageContainer");
-      gifContainer.append(gifimg);
-      gifContainer.insertAdjacentElement("afterbegin", gifimg);
+    //append to container
+    let gifContainer = document.getElementById("posts");
+    gifContainer.append(gifimg);
+    gifContainer.insertAdjacentElement("afterbegin", gifimg);
+    
+})
+//.then(createPost)
+.catch(err => {
+console.log("AAAAAAHHH we got an error!!", err.warn);
     })
-    .catch((err) => {
-      console.log("AAAAAAHHH we got an error!!", err.warn);
-    });
-}
+  }
+
